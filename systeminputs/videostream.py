@@ -21,8 +21,17 @@ class VideoStream(threading.Thread):
         self.usecase = usecase
         self.webcam = cv2.VideoCapture(camera_id)
         self.fps = fps
+        self.webcam.set(cv2.CAP_PROP_FPS, self.fps)
+        print('width ', self.webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
+        print('height ', self.webcam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+        self.webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
+        self.webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
+
+        print('new width ', self.webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
+        print('new height ', self.webcam.get(cv2.CAP_PROP_FRAME_HEIGHT))
         # wait to make sure the camera is up and running
+        print(self.webcam.get(cv2.CAP_PROP_FPS))
 
         time.sleep(2)
 
@@ -36,11 +45,11 @@ class VideoStream(threading.Thread):
             # The current workaround without using C++
 
             self.webcam.grab()
-            grabbed, frame = self.webcam.retrieve()
+            grabbed, frame = self.webcam.retrieve(0)  # self.webcam.read()#
             if grabbed:
                 request_model = request.Request({'Frame': frame})
                 self.usecase.execute(request_model)
-            time.sleep(1 / self.fps)
+            # time.sleep(1 / self.fps)
 
     def __del__(self):
         self.webcam.release()

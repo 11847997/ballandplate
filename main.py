@@ -18,15 +18,15 @@ def main():
 
             # Tracking properties
             'Centroid': (0, 0),
-            'Draw Radius': 50,
+            'Draw Radius': 30,
             'Draw Color': (255, 255, 255),
             'Line Thickness': 2,
 
             # Text Properties
             'Font': cv2.FONT_HERSHEY_SIMPLEX,
-            'Text Placement': (10, 500),  # bottom left corner of text (x, y)
+            'Text Placement': (50, 265),  # bottom left corner of text (x, y)
             'Font Scale': 1,
-            'Font Color': (175, 138, 192),
+            'Font Color': (255, 255, 255),
             'Font Line Thickness': 2
         }
     )
@@ -36,7 +36,7 @@ def main():
 
     console_presenter = usboutput.USBOutput(view_model)
     detection_algorithm = detectball.DetectBall(console_presenter)
-    input_stream = videostream.VideoStream(detection_algorithm, fps=30)
+    input_stream = videostream.VideoStream(detection_algorithm, fps=60)
 
     # Start the needed components in order, All threads are daemons and will commit suicide on exit. This
     # is fine because we are not doing any critical operations
@@ -72,6 +72,8 @@ def main():
             )
 
             cv2.imshow('Frame', view_model.contents['Frame'])
+            cv2.imshow('HSV', view_model.contents['HSV'])
+            cv2.imshow('Segmentation', view_model.contents['Segmentation'])
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             print('Terminating Application')
