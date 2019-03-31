@@ -1,12 +1,14 @@
 import queue
 import threading
 
+from systeminputs import isysteminput
+from systemoutputs import isystemoutput
+
 from models import response, request
-from systemoutputs import consoleprinter
 
 
-class DetectBall(threading.Thread):
-    def __init__(self, system_output: consoleprinter.ConsolePrinter, max_buffering=128):
+class DetectBall(isysteminput.ISystemInput, threading.Thread):
+    def __init__(self, system_output: isystemoutput.ISystemOutput, max_buffering=128):
 
         # Thread config
 

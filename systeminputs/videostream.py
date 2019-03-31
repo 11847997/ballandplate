@@ -2,12 +2,14 @@ import time
 import threading
 import cv2
 
+from systeminputs import isysteminput
+
 from models import request
 from usecases import detectball
 
 
 class VideoStream(threading.Thread):
-    def __init__(self, usecase: detectball.DetectBall, camera_id=0, fps=60):
+    def __init__(self, usecase: isysteminput.ISystemInput, camera_id=0, fps=60):
 
         # Thread config
 

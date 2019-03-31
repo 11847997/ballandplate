@@ -3,7 +3,7 @@ import cv2
 from models import view
 
 from systeminputs import videostream
-from systemoutputs import consoleprinter
+from systemoutputs import usboutput
 from usecases import detectball
 
 
@@ -34,7 +34,7 @@ def main():
     # The input, output, and algorithm of the system can be configured here, if you want to write
     # to a different output device, you need to write a new presenter
 
-    console_presenter = consoleprinter.ConsolePrinter(view_model)
+    console_presenter = usboutput.USBOutput(view_model)
     detection_algorithm = detectball.DetectBall(console_presenter)
     input_stream = videostream.VideoStream(detection_algorithm, fps=30)
 

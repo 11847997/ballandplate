@@ -1,7 +1,8 @@
+from systemoutputs import isystemoutput
 from models import view, response
 
 
-class ConsolePrinter:
+class USBOutput(isystemoutput.ISystemOutput):
     def __init__(self, view: view.View):
         self.view = view
 
