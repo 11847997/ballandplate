@@ -33,6 +33,13 @@ class DetectBall(threading.Thread):
 
             if not self.command_buffer.empty():
                 frame = self.command_buffer.get().contents['Frame']
+
+
+                # Algorithm implementation here
+
+
+                # End algorithm implementation
+
                 response_model = response.Response(
                     {
                         'Centroid': (frame[1, 2, 0], frame[2, 3, 0]),

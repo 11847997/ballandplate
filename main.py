@@ -36,7 +36,7 @@ def main():
 
     console_presenter = consoleprinter.ConsolePrinter(view_model)
     detection_algorithm = detectball.DetectBall(console_presenter)
-    input_stream = videostream.VideoStream(detection_algorithm, fps=15)
+    input_stream = videostream.VideoStream(detection_algorithm, fps=30)
 
     # Start the needed components in order, All threads are daemons and will commit suicide on exit. This
     # is fine because we are not doing any critical operations
