@@ -25,8 +25,8 @@ class VideoStream(threading.Thread):
         print('width ', self.webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
         print('height ', self.webcam.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-        self.webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 200)
-        self.webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 200)
+        self.webcam.set(cv2.CAP_PROP_FRAME_WIDTH, 352)
+        self.webcam.set(cv2.CAP_PROP_FRAME_HEIGHT, 288)
 
         print('new width ', self.webcam.get(cv2.CAP_PROP_FRAME_WIDTH))
         print('new height ', self.webcam.get(cv2.CAP_PROP_FRAME_HEIGHT))
