@@ -8,7 +8,6 @@ from usecases import detectball
 
 
 def main():
-
     # The view_model controls what is displayed in the video feed
     # System outputs know of this and can modify.
 
@@ -18,16 +17,20 @@ def main():
 
             # Tracking properties
             'Centroid': (0, 0),
-            'Draw Radius': 30,
+            'Draw Radius': 15,
             'Draw Color': (255, 255, 255),
-            'Line Thickness': 2,
+            'Line Thickness': 1,
 
             # Text Properties
             'Font': cv2.FONT_HERSHEY_SIMPLEX,
             'Text Placement': (50, 265),  # bottom left corner of text (x, y)
             'Font Scale': 1,
             'Font Color': (255, 255, 255),
-            'Font Line Thickness': 2
+            'Font Line Thickness': 1,
+
+            'Frame Width': None,
+            'Frame Height': None,
+            'Corners': None
         }
     )
 
@@ -71,9 +74,17 @@ def main():
                 view_model.contents['Font Line Thickness']
             )
 
+            if view_model.contents['Corners'] is not None:
+                for i in view_model.contents['Corners']:
+                    x, y = i.ravel()
+                    cv2.circle(view_model.contents['Frame'], (x, y), 3, (0, 0, 255), -1)
+
             cv2.imshow('Frame', view_model.contents['Frame'])
-            cv2.imshow('HSV', view_model.contents['HSV'])
-            cv2.imshow('Segmentation', view_model.contents['Segmentation'])
+            #cv2.imshow('HSV', view_model.contents['HSV'])
+            #cv2.imshow('H', view_model.contents['HSV'][:, :, 0])
+            #cv2.imshow('S', view_model.contents['HSV'][:, :, 1])
+            #cv2.imshow('V', view_model.contents['HSV'][:, :, 2])
+            #cv2.imshow('Segmentation', view_model.contents['Segmentation'])
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             print('Terminating Application')

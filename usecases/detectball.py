@@ -1,6 +1,7 @@
 import queue
 import threading
 
+import numpy as np
 import cv2
 
 from systeminputs import isysteminput
@@ -33,7 +34,6 @@ class DetectBall(isysteminput.ISystemInput, threading.Thread):
         se = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (15, 15))
 
         while True:
-
             # This may need to be changed to drain the buffer and always
             # use the latest frame
             while self.command_buffer.qsize() > 1:
@@ -42,9 +42,12 @@ class DetectBall(isysteminput.ISystemInput, threading.Thread):
             if not self.command_buffer.empty():
                 frame = self.command_buffer.get().contents['Frame']
                 frame_rows, frame_cols, channels = frame.shape
+                gray = frame[:, :, 0]
+
 
                 hsv = cv2.cvtColor(cv2.GaussianBlur(frame, (5, 5), 2), cv2.COLOR_BGR2HSV)
                 _, pink = cv2.threshold(hsv[:, :, 0], 160, 255, cv2.THRESH_BINARY)
+
                 resulting_segmentation = cv2.morphologyEx(pink, cv2.MORPH_OPEN, se)
                 moments = cv2.moments(resulting_segmentation)
 
@@ -65,7 +68,7 @@ class DetectBall(isysteminput.ISystemInput, threading.Thread):
                         'HSV': hsv,
                         'Segmentation': resulting_segmentation,
                         'Frame Width': frame_cols,
-                        'Frame Height': frame_rows
+                        'Frame Height': frame_rows,
                     }
                 )
                 self.system_output.present(response_model)
